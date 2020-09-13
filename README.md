@@ -31,10 +31,6 @@ The simple Blog on Python, Flask
 
 ### Make database migration (by default using SQLite)
 
-* Define 'FLASK_APP'
-
-`export FLASK_APP=microblog.py`
-
 * Init database
 
 `flask db init`
@@ -54,7 +50,7 @@ To rollback database tables use 'flask db downgrade'
 
 * Run 'microblog.py' file using command
 
-`python microblog.py`
+`python blog.py`
 
 
 
