@@ -11,7 +11,7 @@ app.config.from_object(Config)
 
 # database init and setup
 db = SQLAlchemy(app)
-mifrate = Migrate(app, db)
+migrate = Migrate(app, db)
 
 # LoginManager redirect users to login page until they log-in
 # the 'login' is view function name in 'routes.py' to handle it

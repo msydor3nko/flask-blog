@@ -4,6 +4,8 @@ venv
 .vscode
 migrations
 
+## envs
+# .env
 
 ## files
 app.db
