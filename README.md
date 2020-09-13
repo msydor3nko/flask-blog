@@ -48,7 +48,7 @@ To rollback database tables use 'flask db downgrade'
 
 ### Run the App
 
-* Run 'microblog.py' file using command
+* Run 'blog.py' file using command
 
 `python blog.py`
 

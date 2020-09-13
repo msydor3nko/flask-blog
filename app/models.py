@@ -5,7 +5,8 @@ from flask_login import UserMixin
 from app import login
 
 
-class User(UserMixin, db.Model):    # UserMixin implement to User 4 properties: 'is_authenticated', 'is_active', etc.
+# UserMixin implement to User 4 properties: 'is_authenticated', 'is_active', etc.
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -26,10 +27,22 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))   # many Posts <- one User (author)
+    # many Posts <- one User (author)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+
+class LikePost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    like_dislike = db.Column(db.Boolean)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<UserID {} - Like {} - PostID {}>'.format(self.user_id, self.like_dislike, self.post_id)
 
 
 # Flask-Login keeps track of the logged in user by storing its unique identifier in Flask’s user session
