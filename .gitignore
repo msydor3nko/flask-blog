@@ -1,0 +1,9 @@
+## dirs
+__pycache__/
+venv
+.vscode
+migrations
+
+
+## files
+app.db
