@@ -1,11 +1,12 @@
 ## dirs
 __pycache__/
+migrations
 venv
 .vscode
-migrations
+.DS_Store
 
 ## envs
-# .env
+.env
 
 ## files
 app.db
