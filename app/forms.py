@@ -19,7 +19,6 @@ class RegistrationForm(FlaskForm):
                               DataRequired(), EqualTo('password_one')])
     submit = SubmitField('Register')
 
-    # Creating additional WTForms custom validators using pattern 'validate_<field_name>'
     # Making sure that the entered username not already in the database.
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()

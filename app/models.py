@@ -5,14 +5,11 @@ from flask_login import UserMixin
 from app import login
 
 
-# UserMixin implemented to User class 4 Flask-Login properties:
-# 'is_authenticated', 'is_active', 'is_anonymous', 'get_id'
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), nullable=False, index=True, unique=True)
     email = db.Column(db.String(120), nullable=False, index=True, unique=True)
     password_hash = db.Column(db.String(128), nullable=False)
-    # last login
     last_visit = db.Column(db.DateTime, nullable=False, index=True, default=datetime.utcnow)
     
     # One User <- many posts
@@ -57,9 +54,11 @@ class PostLike(db.Model):
     
     # Many likes -> one user
     liked_by_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return '<PostLike ID: {}>'.format(self.id)
     
 
-# Flask-Login keeps track of the logged in user by storing its unique identifier in Flask’s user session
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))

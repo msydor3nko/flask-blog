@@ -3,6 +3,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+import logging
 
 
 # app init and setup
@@ -17,6 +18,11 @@ migrate = Migrate(app, db)
 # the 'login' is view function name in 'routes.py' to handle it
 login = LoginManager(app)
 login.login_view = 'login'
+
+# logger
+logging.basicConfig(filename='requests.log',
+                    level=logging.INFO,
+                    format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 
 from app import routes, models

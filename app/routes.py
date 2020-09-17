@@ -12,6 +12,7 @@ from app.models import User, Post, PostLike
 @app.route('/index')
 @login_required  # redirect not log-in users to '/login' page and return back after log-in
 def index():
+    # app.logger.info(request.endpoint)
     posts = Post.query.all()
     return render_template('index.html', title='Home', posts=posts)
 
@@ -19,10 +20,9 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # authenticated user
-    print('|> current_user | first => ', current_user)
     if current_user.is_authenticated:
         return redirect(url_for('index'))
-    
+
     # user authentication form
     form = LoginForm()
     if form.validate_on_submit():   # POST-method -> True: handling form data | GET-method -> False: ommit form handling
@@ -70,7 +70,8 @@ def register():
 def create_post():
     form = PostCreationForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, body=form.content.data, author=current_user)
+        post = Post(title=form.title.data,
+                    body=form.content.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('New post created!')
@@ -82,21 +83,22 @@ def create_post():
 @login_required
 def analyse_likes():
     # set default period
-    date_to=datetime.today()
-    date_from=date_to-timedelta(days=3)
+    date_to = datetime.today()
+    date_from = date_to-timedelta(days=3)
     period = {"date_to": date_to.date(), "date_from": date_from.date()}
-    
+
     form = AnalyticsForm()
 
     if form.validate_on_submit():
         # getting date period from the AnalyticsForm
         date_from = datetime.strptime(form.date_from.data, '%Y-%m-%d')
-        date_to = datetime.strptime(form.date_to.data, '%Y-%m-%d')+timedelta(days=1)
+        date_to = datetime.strptime(
+            form.date_to.data, '%Y-%m-%d')+timedelta(days=1)
         likes_period = PostLike.query.filter(PostLike.like == True)\
             .filter(PostLike.date >= date_from)\
             .filter(PostLike.date <= date_to)\
             .all()
-        
+
         # summarise likes by days
         if not likes_period:
             flash('There is no likes for current period!')
@@ -129,20 +131,3 @@ def save_unlike(post_id):
     db.session.add(post_unlike)
     db.session.commit()
     return redirect(url_for('index'))
-
-
-
-# @app.before_request
-# def log_request_info():
-#     pass
-#     app.logger.info(f'Request')
-#     # app.logger.debug('Headers: %s', request.headers)
-#     # app.logger.debug('Body: %s', request.get_data())
-
-
-
-
-# print(f"=> user.is_authenticated    => {user.is_authenticated}")
-# print(f"=> user.is_active           => {user.is_active}")
-# print(f"=> user.is_anonymous        => {user.is_anonymous}")
-# print(f"=> user.get_id()            => {user.get_id()}")

@@ -10,3 +10,4 @@ venv
 
 ## files
 app.db
+requests.log

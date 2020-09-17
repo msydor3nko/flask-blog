@@ -2,9 +2,7 @@
 
 {% block content %}
 <h1>Sign In</h1>
-<!-- 'novalidate' attribute disabling form validation on the client side for make it by Flask app -->
-<!-- 'form.hidden_tag' generates a hidden field that includes a token (from 'SECRET_KEY' config) that is used to protect the form against CSRF attacks -->
-<!-- 'form.<field_name>.label' and 'form.<field_name>()' creating <input> with needed attrs: size, CSS, etc. -->
+
 <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
     <p>
