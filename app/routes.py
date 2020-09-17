@@ -20,6 +20,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # authenticated user
+    print('|> current_user | first => ', current_user)
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     
@@ -35,6 +36,10 @@ def login():
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
+        # saving login into 'last_visit'
+        user.last_visit = datetime.utcnow()
+        db.session.add(user)
+        db.session.commit()
         return redirect(next_page)
 
     return render_template('login.html', title='Sign In', form=form)
@@ -75,6 +80,7 @@ def create_post():
 
 
 @app.route('/analytics', methods=['GET', 'POST'])
+@login_required
 def analyse_likes():
     # set default period
     date_to=datetime.today()
@@ -106,6 +112,12 @@ def analyse_likes():
     return render_template('analytics.html', title='Analytics', form=form, period=period)
 
 
+
+
+# @app.before_request
+# def log_request_info():
+#     app.logger.debug('Headers: %s', request.headers)
+#     app.logger.debug('Body: %s', request.get_data())
 
 
 

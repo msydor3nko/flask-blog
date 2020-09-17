@@ -12,9 +12,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), nullable=False, index=True, unique=True)
     email = db.Column(db.String(120), nullable=False, index=True, unique=True)
     password_hash = db.Column(db.String(128), nullable=False)
-    
     # last login
-    # last_visit = db.Column(db.DateTime, nullable=False, index=True, default=datetime.utcnow)
+    last_visit = db.Column(db.DateTime, nullable=False, index=True, default=datetime.utcnow)
     
     # One User <- many posts
     posts = db.relationship('Post', backref='author')

@@ -19,11 +19,11 @@ two_days_ago = now - timedelta(days=2)
 
 # create useres
 # author
-kate = User(username='Kate', email='kate@example.com')
+kate = User(username='Kate', email='kate@example.com', last_visit=datetime.utcnow())
 kate.set_password(password='1')
 db.session.add(kate)
 # liker
-mike = User(username='Mike', email='mike@example.com')
+mike = User(username='Mike', email='mike@example.com', last_visit=datetime.utcnow())
 mike.set_password(password='2')
 db.session.add(mike)
 # save users
