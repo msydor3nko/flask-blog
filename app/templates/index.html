@@ -7,8 +7,8 @@
 <div>
     <p>
         {{ post.author.username }} posted: <b>{{ post.body }}</b>
-        <a href="{{ url_for('index') }}">like</a>
-        <a href="{{ url_for('index') }}">unlike</a>
+        <a href="{{ url_for('save_like', post_id=post.id) }}">like</a>
+        <a href="{{ url_for('save_unlike', post_id=post.id) }}">unlike</a>
     </p>
 </div>
 {% endfor %}

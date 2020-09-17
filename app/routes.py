@@ -13,7 +13,6 @@ from app.models import User, Post, PostLike
 @login_required  # redirect not log-in users to '/login' page and return back after log-in
 def index():
     posts = Post.query.all()
-    print('current_user', current_user)
     return render_template('index.html', title='Home', posts=posts)
 
 
@@ -112,12 +111,33 @@ def analyse_likes():
     return render_template('analytics.html', title='Analytics', form=form, period=period)
 
 
+@app.route('/like/<post_id>')
+@login_required
+def save_like(post_id):
+    post = Post.query.get(post_id)
+    post_like = PostLike(like=True, liked_post=post, liked_by=current_user)
+    db.session.add(post_like)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+
+@app.route('/unlike/<post_id>')
+@login_required
+def save_unlike(post_id):
+    post = Post.query.get(post_id)
+    post_unlike = PostLike(like=False, liked_post=post, liked_by=current_user)
+    db.session.add(post_unlike)
+    db.session.commit()
+    return redirect(url_for('index'))
+
 
 
 # @app.before_request
 # def log_request_info():
-#     app.logger.debug('Headers: %s', request.headers)
-#     app.logger.debug('Body: %s', request.get_data())
+#     pass
+#     app.logger.info(f'Request')
+#     # app.logger.debug('Headers: %s', request.headers)
+#     # app.logger.debug('Body: %s', request.get_data())
 
 
 
