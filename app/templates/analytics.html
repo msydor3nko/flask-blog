@@ -10,7 +10,7 @@
     {{ form.hidden_tag() }}
     <p>
         {{ form.date_from.label }}<br>
-        {{ form.date_from(size=10) }}<br>
+        {{ form.date_from(size=10, value=period["date_from"]) }}<br>
         <!-- Validation error messages for 'username' field -->
         {% for error in form.date_from.errors %}
         <span style="color: red;">[{{ error }}]</span>
@@ -18,7 +18,7 @@
     </p>
     <p>
         {{ form.date_to.label }}<br>
-        {{ form.date_to(size=10) }}<br>
+        {{ form.date_to(size=10, value=period["date_to"]) }}<br>
         <!-- Validation error messages for 'password' field -->
         {% for error in form.date_to.errors %}
         <span style="color: red;">[{{ error }}]</span>

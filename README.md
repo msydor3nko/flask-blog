@@ -46,12 +46,15 @@ The simple Blog on Python, Flask
 To rollback database tables use 'flask db downgrade'
 
 
+### Fill data to DB
+
+* To fill data into database use the next command:
+
+`python fill_db.py`
+
+
 ### Run the App
 
-* Run 'blog.py' file using command
+* To run the app use the next command:
 
-`python blog.py`
-
-
-
-
+`flask run`
