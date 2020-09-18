@@ -2,13 +2,42 @@
 
 {% block content %}
 <h1>Hello, {{ current_user.username }}!</h1>
-{% for post in posts %}
-<div>
-    <p>
-        {{ post.author.username }} posted: <b>{{ post.body }}</b>
-        <a href="{{ url_for('save_like', post_id=post.id) }}">like</a>
-        <a href="{{ url_for('save_unlike', post_id=post.id) }}">unlike</a>
-    </p>
+<div id="posts_lists">
+    {% for post in posts %}
+    <div class="post-id-{% post.id %} ">
+        <p>
+            {{ post.author.username }} posted: <b>{{ post.body }}</b>
+            <span onclick="postActivity.like()">like</span>
+            <span>unlike</span>
+        </p>
+        <div class="post-likes">{% post.likes %}</div>
+    </div>
 </div>
+<script>
+    var postActivity = {
+        reqvest: (url, data) => fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            })
+        ,
+        postsListsNode: document.querySelector('#posts_lists'),
+        async like(postId) {
+            const reqvest = await this.reqvest('like', {postId: 1})
+            const response = reqvest.json()
+            if (response.status === 200) {
+                const postLikesNode = this.postsListsNode.querySelector(`.post-id-${postId} .post-likes`)
+                postLikesNode.innerHTML = response.body.totalLikes
+            }
+        },
+        async unlike(postId) {
+            const reqvest = await this.reqvest('like', {postId: 1})
+            const response = reqvest.json()
+            if (response.status === 200) {
+                const postLikesNode = this.postsListsNode.querySelector(`.post-id-${postId} .post-likes`)
+                postLikesNode.innerHTML = response.body.totalLikes
+            }
+        }
+    }
+</script>
 {% endfor %}
 {% endblock %}
