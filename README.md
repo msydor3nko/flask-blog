@@ -1,12 +1,13 @@
 # flask-blog
-The simple Blog on Python, Flask
+The simple Blog on Python, Flask.
+Has a basic blog features implementation such as user signup, user login, post creation, post like/unlike, analytics of likes summarized per day, saving last user login and user request logger.
 
-## What do you need
+# What do you need
 
 **You need:** Git, Python3, pip.
 
 
-## Following by steps
+# Follow the instructions to start the project
 
 ### Setup environment
 
@@ -29,9 +30,9 @@ The simple Blog on Python, Flask
 `pip install -r requirements.txt`
 
 
-### Make database migration (by default using SQLite)
+### Make database migration (by default used SQLite)
 
-* Init database
+* Initialize database (reload venv if you get error)
 
 `flask db init`
 
@@ -46,7 +47,7 @@ The simple Blog on Python, Flask
 To rollback database tables use 'flask db downgrade'
 
 
-### Fill data to DB
+### Fill data into DB
 
 * To fill data into database use the next command:
 
